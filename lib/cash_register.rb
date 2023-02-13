@@ -6,6 +6,7 @@ class CashRegister
     attr_accessor :total , :price , :items, :last_transaction
     
     
+    
 
     def initialize(discount = 20)
         @discount =  discount
@@ -17,17 +18,19 @@ class CashRegister
         @title = title
         @price = price
         @quantity = quantity
-        self.total += price * quantity
+        self.last_transaction = price * quantity
+        self.total += self.last_transaction
+
         quantity.times{@items << title}
      end
  
     def apply_discount
-
-        if discount == 0
+        if self.discount == 0  
             "There is no discount to apply."
+
         else
-        self.total = total - discount * total/100
-        "After the discount, the total comes to $#{total}."
+         self.total = self.total - self.discount * self.total/100
+            "After the discount, the total comes to $#{self.total}."
         end
 
     end
@@ -37,13 +40,13 @@ class CashRegister
     end
     
     def void_last_transaction
+        self.total -= self.last_transaction
 
 
     end
- 
 end
 
-cr = CashRegister.new(20)
+cr = CashRegister.new(0)
 
 
 binding.pry
